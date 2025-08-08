@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <title>Smart Suspender</title>
+        <style>
+            :root {
+                --bg: #2a2a2a;
+                --panel: #323232;
+                --border: #404040;
+                --text: #e0e0e0;
+                --text-dim: #a0a0a0;
+                --accent: #4a90e2;
+                --accent-hover: #357abd;
+                --danger: #ef4444;
+                --radius: 10px;
+            }
+            body {
+                margin: 0;
+                padding: 14px 14px 12px;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, Arial, sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                width: 300px;
+            }
+            h1 {
+                font-size: 16px;
+                margin: 0 0 2px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+            .sub {
+                font-size: 11px;
+                color: var(--text-dim);
+                margin: 0;
+            }
+            .header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 14px;
+            }
+            .logo {
+                width: 24px;
+                height: 24px;
+                border-radius: 8px;
+                background: #3a3a3a;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 10px;
+                border: 1px solid var(--border);
+            }
+            .actions {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            button.action {
+                appearance: none;
+                border: 1px solid var(--border);
+                background: var(--panel);
+                color: var(--text);
+                font-size: 13px;
+                font-weight: 500;
+                padding: 8px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                letter-spacing: 0.25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                transition: background 0.15s, border-color 0.15s;
+            }
+            button.action:hover {
+                background: #3b3b3b;
+                border-color: #4d4d4d;
+            }
+            button.action:active {
+                background: #333;
+            }
+            button.primary {
+                background: var(--accent);
+                border-color: var(--accent);
+                color: #fff;
+            }
+            button.primary:hover {
+                background: var(--accent-hover);
+                border-color: var(--accent-hover);
+            }
+            button.danger {
+                background: #3a2222;
+                border-color: #5a2d2d;
+                color: #ffb4b4;
+            }
+            button.danger:hover {
+                background: #4a2d2d;
+            }
+            .footer {
+                margin-top: 14px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 10.5px;
+                color: var(--text-dim);
+                border-top: 1px solid var(--border);
+                padding-top: 8px;
+            }
+            .link-btn {
+                background: none;
+                border: none;
+                color: var(--accent);
+                cursor: pointer;
+                padding: 2px 4px;
+                font-size: 11px;
+                border-radius: 4px;
+            }
+            .link-btn:hover {
+                color: var(--accent-hover);
+            }
+            .count {
+                font-variant-numeric: tabular-nums;
+                font-size: 11px;
+                padding: 2px 6px;
+                background: #3a3a3a;
+                border: 1px solid var(--border);
+                border-radius: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="logo">
+                <img src="icons/icon16.png" alt="Smart Suspender Logo" />
+            </div>
+            <div style="flex: 1; min-width: 0">
+                <h1>Smart Suspender</h1>
+                <p class="sub">Lightweight & memory friendly</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="suspend-current" class="action primary">
+                Suspend current tab
+            </button>
+            <button id="suspend-all" class="action">Suspend other tabs</button>
+            <button id="unsuspend-all" class="action">Restore all tabs</button>
+        </div>
+
+        <div class="footer">
+            <button
+                id="open-options"
+                class="link-btn"
+                title="Open full settings"
+            >
+                Settings
+            </button>
+            <span>v1.0</span>
+        </div>
+
+        <script src="popup.js"></script>
+    </body>
+</html>

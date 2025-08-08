@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Smart Suspender - Settings</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: #1e1e1e;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, "Helvetica Neue", Arial, sans-serif;
+                color: #e0e0e0;
+                line-height: 1.6;
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                display: flex;
+                min-height: 100vh;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: 240px;
+                background: #2a2a2a;
+                padding: 32px 0;
+                border-right: 1px solid #404040;
+            }
+
+            .sidebar-header {
+                padding: 0 24px 32px 24px;
+                border-bottom: 1px solid #404040;
+                margin-bottom: 24px;
+            }
+
+            .sidebar-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #f0f0f0;
+                margin-bottom: 4px;
+            }
+
+            .sidebar-subtitle {
+                font-size: 14px;
+                color: #a0a0a0;
+            }
+
+            .sidebar-nav {
+                padding: 0 16px;
+            }
+
+            .nav-item {
+                display: flex;
+                align-items: center;
+                padding: 12px 16px;
+                margin-bottom: 4px;
+                border-radius: 8px;
+                color: #b0b0b0;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                cursor: pointer;
+            }
+
+            .nav-item:hover {
+                background: #3a3a3a;
+                color: #e0e0e0;
+            }
+
+            .nav-item.active {
+                background: #4a90e2;
+                color: white;
+            }
+
+            .nav-item-icon {
+                margin-right: 12px;
+                font-size: 16px;
+            }
+
+            /* Main Content */
+            .main-content {
+                flex: 1;
+                padding: 32px 40px;
+            }
+
+            .page-header {
+                margin-bottom: 32px;
+            }
+
+            .page-title {
+                font-size: 28px;
+                font-weight: 600;
+                color: #f0f0f0;
+                margin-bottom: 8px;
+            }
+
+            .page-description {
+                font-size: 16px;
+                color: #a0a0a0;
+            }
+
+            /* Settings Sections */
+            .settings-section {
+                background: #2a2a2a;
+                border: 1px solid #404040;
+                border-radius: 12px;
+                margin-bottom: 24px;
+                overflow: hidden;
+            }
+
+            .section-header {
+                padding: 20px 24px;
+                border-bottom: 1px solid #404040;
+                background: #323232;
+            }
+
+            .section-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #f0f0f0;
+                margin-bottom: 4px;
+            }
+
+            .section-description {
+                font-size: 14px;
+                color: #a0a0a0;
+            }
+
+            .section-content {
+                padding: 0;
+            }
+
+            /* Setting Item */
+            .setting-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 24px;
+                border-bottom: 1px solid #404040;
+            }
+
+            .setting-item:last-child {
+                border-bottom: none;
+            }
+
+            .setting-info {
+                flex: 1;
+            }
+
+            .setting-title {
+                font-size: 16px;
+                font-weight: 500;
+                color: #e0e0e0;
+                margin-bottom: 4px;
+            }
+
+            .setting-description {
+                font-size: 14px;
+                color: #a0a0a0;
+            }
+
+            /* Toggle Switch */
+            .toggle-switch {
+                position: relative;
+                width: 48px;
+                height: 24px;
+                background: #505050;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .toggle-switch::after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 20px;
+                height: 20px;
+                background: white;
+                border-radius: 50%;
+                transition: transform 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .toggle-switch.active {
+                background: #4a90e2;
+            }
+
+            .toggle-switch.active::after {
+                transform: translateX(24px);
+            }
+
+            /* Select Dropdown */
+            .select-dropdown {
+                background: #3a3a3a;
+                border: 1px solid #505050;
+                border-radius: 6px;
+                color: #e0e0e0;
+                padding: 8px 12px;
+                font-size: 14px;
+                min-width: 120px;
+                cursor: pointer;
+            }
+
+            .select-dropdown:focus {
+                outline: none;
+                border-color: #4a90e2;
+            }
+
+            /* Time Input */
+            .time-input-group {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .time-input {
+                background: #3a3a3a;
+                border: 1px solid #505050;
+                border-radius: 6px;
+                color: #e0e0e0;
+                padding: 8px 12px;
+                font-size: 14px;
+                width: 80px;
+                text-align: center;
+            }
+
+            .time-input:focus {
+                outline: none;
+                border-color: #4a90e2;
+            }
+
+            .time-label {
+                font-size: 14px;
+                color: #a0a0a0;
+            }
+
+            /* URL Whitelist */
+            .url-whitelist {
+                padding: 24px;
+            }
+
+            .whitelist-description {
+                font-size: 14px;
+                color: #a0a0a0;
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .whitelist-textarea {
+                width: 100%;
+                min-height: 120px;
+                background: #3a3a3a;
+                border: 1px solid #505050;
+                border-radius: 8px;
+                color: #e0e0e0;
+                padding: 12px;
+                font-size: 14px;
+                font-family: monospace;
+                resize: vertical;
+            }
+
+            .whitelist-textarea:focus {
+                outline: none;
+                border-color: #4a90e2;
+            }
+
+            .whitelist-textarea::placeholder {
+                color: #666;
+            }
+
+            /* Info Icon */
+            .info-icon {
+                color: #4a90e2;
+                cursor: help;
+            }
+
+            /* Disabled State */
+            .setting-item.disabled {
+                opacity: 0.5;
+                pointer-events: none;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+
+                .sidebar {
+                    width: 100%;
+                    border-right: none;
+                    border-bottom: 1px solid #404040;
+                }
+
+                .main-content {
+                    padding: 24px 20px;
+                }
+            }
+
+            /* Keyboard shortcut display styles */
+            .shortcut-display {
+                background: #3a3a3a;
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-size: 12px;
+                color: #a0a0a0;
+                min-width: 80px;
+                display: inline-block;
+                text-align: center;
+            }
+
+            .edit-shortcuts-btn {
+                background: #4a90e2;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                transition: background-color 0.2s ease;
+            }
+
+            .edit-shortcuts-btn:hover {
+                background: #357abd;
+            }
+
+            .settings-link {
+                color: #4a90e2;
+                font-weight: 500;
+            }
+
+            .content-section-hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Smart Suspender</div>
+                    <div class="sidebar-subtitle">
+                        Intelligent Memory Management
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="nav-item active" data-section="settings">
+                        <span class="nav-item-icon">⚙️</span>
+                        Settings
+                    </div>
+                    <div class="nav-item" data-section="keyboard">
+                        <span class="nav-item-icon">⌨️</span>
+                        Keyboard shortcuts
+                    </div>
+                    <div class="nav-item" data-section="about">
+                        <span class="nav-item-icon">ℹ️</span>
+                        About
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Settings Section -->
+                <div id="settings-section" class="content-section">
+                    <div class="page-header">
+                        <h1 class="page-title">Automatic tab suspension</h1>
+                    </div>
+
+                    <!-- Auto Suspension -->
+                    <div class="settings-section">
+                        <div class="section-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Automatically suspend tabs after:
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <select
+                                        id="suspend-time"
+                                        class="select-dropdown"
+                                    >
+                                        <option value="5">5 mins</option>
+                                        <option value="10">10 mins</option>
+                                        <option value="15">15 mins</option>
+                                        <option value="20">20 mins</option>
+                                        <option value="30" selected>
+                                            30 mins
+                                        </option>
+                                        <option value="45">45 mins</option>
+                                        <option value="60">1 hour</option>
+                                        <option value="120">2 hours</option>
+                                        <option value="240">4 hours</option>
+                                        <option value="480">8 hours</option>
+                                        <option value="never">Never</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Never suspend pinned tabs
+                                    </div>
+                                </div>
+                                <div
+                                    id="ignore-pinned-toggle"
+                                    class="toggle-switch active"
+                                ></div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Never suspend tabs that are playing
+                                        audio
+                                    </div>
+                                </div>
+                                <div
+                                    id="ignore-audio-toggle"
+                                    class="toggle-switch active"
+                                ></div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Never suspend active tab in each window
+                                    </div>
+                                </div>
+                                <div
+                                    id="ignore-active-toggle"
+                                    class="toggle-switch active"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL Whitelist -->
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                Never suspend tabs with URLs from the following
+                                list:
+                            </div>
+                            <div class="section-description">
+                                <span class="info-icon">ℹ️</span>
+                                URLs may be specified with asterisks (*) as
+                                wildcards
+                            </div>
+                        </div>
+                        <div class="section-content">
+                            <div class="url-whitelist">
+                                <textarea
+                                    id="url-whitelist"
+                                    class="whitelist-textarea"
+                                    placeholder="Enter URLs, one per line. Example:&#10;*://mail.google.com/*&#10;*://github.com/*&#10;localhost:*"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keyboard Shortcuts Section -->
+                <div
+                    id="keyboard-section"
+                    class="content-section content-section-hidden"
+                >
+                    <div class="page-header">
+                        <h1 class="page-title">Keyboard shortcuts</h1>
+                        <p class="page-description">
+                            View current keyboard shortcuts and manage them
+                            through Chrome's extension settings
+                        </p>
+                    </div>
+
+                    <div class="settings-section">
+                        <div class="section-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Suspend current tab
+                                    </div>
+                                    <div class="setting-description">
+                                        Suspend the currently active tab
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <kbd
+                                        id="suspend-tab-display"
+                                        class="shortcut-display"
+                                        >Not set</kbd
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Unsuspend current tab
+                                    </div>
+                                    <div class="setting-description">
+                                        Restore the currently active suspended
+                                        tab
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <kbd
+                                        id="unsuspend-tab-display"
+                                        class="shortcut-display"
+                                        >Not set</kbd
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Suspend all other tabs
+                                    </div>
+                                    <div class="setting-description">
+                                        Suspend all tabs except the current one
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <kbd
+                                        id="suspend-other-tabs-display"
+                                        class="shortcut-display"
+                                        >Not set</kbd
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Suspend all tabs
+                                    </div>
+                                    <div class="setting-description">
+                                        Suspend all tabs including the current
+                                        one
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <kbd
+                                        id="suspend-all-tabs-display"
+                                        class="shortcut-display"
+                                        >Not set</kbd
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Unsuspend all tabs
+                                    </div>
+                                    <div class="setting-description">
+                                        Restore all suspended tabs
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <kbd
+                                        id="unsuspend-all-tabs-display"
+                                        class="shortcut-display"
+                                        >Not set</kbd
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <div class="section-title">Manage Shortcuts</div>
+                            <div class="section-description">
+                                Configure your keyboard shortcuts
+                            </div>
+                        </div>
+                        <div class="section-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Edit shortcuts
+                                    </div>
+                                    <div class="setting-description">
+                                        Open Chrome's extension shortcuts page
+                                        to set up or modify keyboard shortcuts
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <button
+                                        id="edit-shortcuts-btn"
+                                        class="edit-shortcuts-btn"
+                                    >
+                                        Edit Shortcuts
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Section -->
+                <div
+                    id="about-section"
+                    class="content-section content-section-hidden"
+                >
+                    <div class="page-header">
+                        <h1 class="page-title">About</h1>
+                        <p class="page-description">
+                            Information about Smart Suspender extension
+                        </p>
+                    </div>
+
+                    <div class="settings-section">
+                        <div class="section-content">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">Version</div>
+                                    <div class="setting-description">
+                                        Current extension version
+                                    </div>
+                                </div>
+                                <div class="time-input-group">
+                                    <span class="settings-link">1.0.0</span>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">Description</div>
+                                    <div class="setting-description">
+                                        A smart suspender extension that
+                                        intelligently manages browser memory by
+                                        suspending inactive tabs with precise
+                                        per-tab timing and advanced controls
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Memory Savings
+                                    </div>
+                                    <div class="setting-description">
+                                        Suspended tabs typically use 95% less
+                                        memory than active tabs
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">Open Source</div>
+                                    <div class="setting-description">
+                                        This project is fully open source. You
+                                        can inspect, audit, fork and contribute
+                                        improvements.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">Repository</div>
+                                    <div class="setting-description">
+                                        (Add your public repo URL here, e.g.
+                                        https://github.com/yourname/tab-suspender)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Contributing
+                                    </div>
+                                    <div class="setting-description">
+                                        Issues and pull requests are welcome.
+                                        Please file reproducible steps and keep
+                                        changes focused. See CONTRIBUTING.md (if
+                                        present) for guidelines.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">
+                                        Security / Privacy
+                                    </div>
+                                    <div class="setting-description">
+                                        No analytics, tracking, or remote calls.
+                                        All logic runs locally; only tab
+                                        metadata needed for restore is stored in
+                                        local storage.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">License</div>
+                                    <div class="setting-description">
+                                        Specify an OSI-approved license (e.g.
+                                        MIT) in your repository so users
+                                        understand their rights.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="options.js"></script>
+    </body>
+</html>
