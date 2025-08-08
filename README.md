@@ -11,12 +11,6 @@ A lightweight Chrome extension that suspends inactive tabs to save memory, inspi
 -   ⚙️ **Customizable Settings**: Configure auto-suspend and ignore rules
 -   🔒 **Privacy-Focused**: No tracking, all data stored locally
 
-## Keyboard Shortcuts
-
--   `Ctrl+Shift+S` - Suspend current tab
--   `Ctrl+Shift+A` - Suspend all other tabs
--   `Ctrl+Shift+U` - Restore all suspended tabs
-
 ## Installation
 
 ### Install from Source (Developer Mode)
@@ -161,7 +155,6 @@ The extension uses Chrome's local storage API to store:
 4. Test thoroughly
 5. Submit a pull request
 
-For internal architecture & API reference see `DEVELOPERS.md`.
 
 ## License
 
@@ -170,8 +163,6 @@ MIT License - see LICENSE file for details
 ## Credits
 
 -   Inspired by [The Great Suspender](https://github.com/aciidic/thegreatsuspender-notrack)
--   UI styled with [Tailwind CSS](https://tailwindcss.com/)
--   Icons use SVG graphics with gradient backgrounds
 
 ---
 
