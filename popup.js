@@ -87,15 +87,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    // Suspend all tabs
+    // Suspend other tabs
     suspendAllBtn.addEventListener("click", async () => {
         setButtonLoading(suspendAllBtn);
 
         try {
-            await chrome.runtime.sendMessage({ action: "suspendAllTabs" });
-            showSuccess(suspendAllBtn, "All suspended!");
+            await chrome.runtime.sendMessage({ action: "suspendOtherTabs" });
+            showSuccess(suspendAllBtn, "Other tabs suspended!");
         } catch (error) {
-            console.error("Failed to suspend all tabs:", error);
+            console.error("Failed to suspend other tabs:", error);
             showError(suspendAllBtn, "Error");
         } finally {
             setButtonLoading(suspendAllBtn, false);
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     break;
                 case "KeyA":
                     e.preventDefault();
-                    suspendAllBtn.click();
+                    suspendAllBtn.click(); // Suspend other tabs
                     break;
                 case "KeyU":
                     e.preventDefault();
